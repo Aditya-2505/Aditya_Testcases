@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Mothercare Automation Suite" verbose="1" thread-count="1">
+
+  <listeners>
+    <listener class-name="aditya.mothercare.listeners.TestListener"/>
+  </listeners>
+
+  <test name="Homepage Category Tests (TS_0081 - TS_0085)">
+    <classes>
+      <class name="aditya.mothercare.tests.HomepageCategoryTests"/>
+    </classes>
+  </test>
+
+  <test name="Product Listing Tests (TS_0086 - TS_0090)">
+    <classes>
+      <class name="aditya.mothercare.tests.ProductListingTests"/>
+    </classes>
+  </test>
+
+  <test name="Product Detail Tests (TS_0091 - TS_0096)">
+    <classes>
+      <class name="aditya.mothercare.tests.ProductDetailTests"/>
+    </classes>
+  </test>
+
+</suite>

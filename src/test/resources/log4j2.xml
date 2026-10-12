@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+  <Properties>
+    <!-- Timestamp used in log file names, set dynamically at runtime via system property -->
+    <Property name="LOG_TIMESTAMP">${sys:log.timestamp:-default}</Property>
+    <Property name="LOG_DIR">${sys:log.dir:-logs}</Property>
+  </Properties>
+
+  <Appenders>
+
+    <!-- Main log file -->
+    <RollingFile name="FileAppender"
+                 fileName="${LOG_DIR}/mothercare_${LOG_TIMESTAMP}.log"
+                 filePattern="${LOG_DIR}/mothercare_${LOG_TIMESTAMP}_%i.log">
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%t] %logger{1} - %msg%n"/>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="10MB"/>
+      </Policies>
+    </RollingFile>
+
+    <!-- Error-only log file -->
+    <RollingFile name="ErrorFileAppender"
+                 fileName="${LOG_DIR}/mothercare_error_${LOG_TIMESTAMP}.log"
+                 filePattern="${LOG_DIR}/mothercare_error_${LOG_TIMESTAMP}_%i.log">
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%t] %logger{1} - %msg%n"/>
+      <Filters>
+        <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+      </Filters>
+      <Policies>
+        <SizeBasedTriggeringPolicy size="5MB"/>
+      </Policies>
+    </RollingFile>
+
+  </Appenders>
+
+  <Loggers>
+    <!-- Application logger: DEBUG and above go to both files, NOT to console -->
+    <Logger name="aditya.mothercare" level="DEBUG" additivity="false">
+      <AppenderRef ref="FileAppender"/>
+      <AppenderRef ref="ErrorFileAppender"/>
+    </Logger>
+
+    <!-- Root logger: only WARN and above (Maven/TestNG output stays visible) -->
+    <Root level="WARN">
+      <AppenderRef ref="FileAppender"/>
+    </Root>
+  </Loggers>
+
+</Configuration>
